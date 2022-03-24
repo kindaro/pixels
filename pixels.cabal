@@ -1,0 +1,73 @@
+cabal-version: 2.4
+name: pixels
+version: 0.0.0.0
+
+common commons
+  default-language: Haskell2010
+  build-depends:
+    , base
+    , base-unicode-symbols
+    , bifunctors
+    , containers
+    , containers-unicode-symbols
+    , data-fix
+    , generic-data
+    , ghc-prim
+    , pretty-show
+    , tasty
+    , tasty-quickcheck
+    , sdl2
+
+  default-extensions:
+    AllowAmbiguousTypes
+    BlockArguments
+    ConstraintKinds
+    DataKinds
+    DeriveFoldable
+    DeriveFoldable
+    DeriveFunctor
+    DeriveFunctor
+    DeriveGeneric
+    DeriveTraversable
+    DeriveTraversable
+    FlexibleContexts
+    FlexibleInstances
+    FunctionalDependencies
+    GADTs
+    KindSignatures
+    LiberalTypeSynonyms
+    MultiParamTypeClasses
+    OverloadedLists
+    PartialTypeSignatures
+    PatternSynonyms
+    PolyKinds
+    RankNTypes
+    ScopedTypeVariables
+    StandaloneDeriving
+    StandaloneKindSignatures
+    TemplateHaskell
+    TupleSections
+    TypeApplications
+    TypeFamilies
+    TypeFamilyDependencies
+    TypeOperators
+    UndecidableInstances
+    UnicodeSyntax
+  ghc-options: -Wpartial-type-signatures -fdefer-typed-holes -Wall -Wno-star-is-type -Wno-unticked-promoted-constructors
+
+library
+  import: commons
+  hs-source-dirs: library
+  exposed-modules: Pixels
+
+executable pixels
+  import: commons
+  hs-source-dirs: executable/pixels
+  main-is: Main.hs
+
+test-suite checks
+  import: commons
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test-suite/checks
+  main-is: Checks.hs
+  build-depends: pixels

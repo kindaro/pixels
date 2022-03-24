@@ -1,0 +1,10 @@
+cradle:
+  cabal:
+    - path: "library"
+      component: "lib:pixels"
+
+    - path: "library/Main.hs"
+      component: "pixels:exe:pixels"
+
+    - path: "checks"
+      component: "pixels:test:checks"

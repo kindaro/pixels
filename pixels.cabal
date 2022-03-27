@@ -17,6 +17,8 @@ common commons
     , tasty
     , tasty-quickcheck
     , sdl2
+    , linear
+    , mtl
 
   default-extensions:
     AllowAmbiguousTypes
@@ -38,6 +40,8 @@ common commons
     LiberalTypeSynonyms
     MultiParamTypeClasses
     OverloadedLists
+    OverloadedStrings
+    RecordWildCards
     PartialTypeSignatures
     PatternSynonyms
     PolyKinds
@@ -53,6 +57,7 @@ common commons
     TypeOperators
     UndecidableInstances
     UnicodeSyntax
+
   ghc-options: -Wpartial-type-signatures -fdefer-typed-holes -Wall -Wno-star-is-type -Wno-unticked-promoted-constructors
 
 library

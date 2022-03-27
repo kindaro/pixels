@@ -3,8 +3,8 @@ cradle:
     - path: "library"
       component: "lib:pixels"
 
-    - path: "library/Main.hs"
+    - path: "executable/pixels/Main.hs"
       component: "pixels:exe:pixels"
 
-    - path: "checks"
+    - path: "test-suite/checks"
       component: "pixels:test:checks"

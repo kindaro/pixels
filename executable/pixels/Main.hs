@@ -16,9 +16,10 @@ pattern Keyboard keyboardEventKeyMotion keysymKeycode ← Event
 data SdlState α = SdlState
   { window ∷ Window
   , renderer ∷ Renderer
+  , recurse ∷ IO α
   }
 
-runSdl ∷ (SdlState α → IO α → IO α) → IO α
+runSdl ∷ (SdlState α → IO α) → IO α
 runSdl action = do
   initializeAll
   window ← createWindow "…" defaultWindow
@@ -26,7 +27,7 @@ runSdl action = do
   result ← fix \ recurse → do
     clear renderer
     present renderer
-    action SdlState {..} recurse
+    action SdlState {..}
   destroyWindow window
   return result
 
@@ -36,7 +37,7 @@ setDrawColor color renderer = do
   return ( )
 
 main ∷ IO ( )
-main = runSdl \ SdlState {..} recurse → do
+main = runSdl \ SdlState {..} → do
   setDrawColor (V4 0 0 255 255) renderer
   event ← waitEvent
   case event of

@@ -25,17 +25,12 @@ runSdl action = do
   window ← createWindow "…" defaultWindow
   renderer ← createRenderer window (-1) defaultRenderer
   result ← fix \ recursion → do
+    rendererDrawColor renderer $= V4 0 0 0 255
     clear renderer
     present renderer
     runReaderT action SdlState {..}
   destroyWindow window
   return result
-
-setDrawColor ∷ V4 Word8 → ReaderT (SdlState α) IO ( )
-setDrawColor color = do
-  SdlState {..} ← ask
-  rendererDrawColor renderer $= color
-  return ( )
 
 recurse ∷ ReaderT (SdlState α) IO α
 recurse = do
@@ -44,7 +39,6 @@ recurse = do
 
 main ∷ IO ( )
 main = runSdl do
-  setDrawColor (V4 0 0 255 255)
   event ← waitEvent
   case event of
     Keyboard Pressed KeycodeQ → return ( )

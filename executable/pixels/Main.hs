@@ -24,7 +24,7 @@ runSdl action = do
   initializeAll
   window ← createWindow "…" defaultWindow
   renderer ← createRenderer window (-1) defaultRenderer
-  result ← fix \ recurse → do
+  result ← fix \ recursion → do
     clear renderer
     present renderer
     runReaderT action SdlState {..}

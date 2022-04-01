@@ -16,6 +16,9 @@ pattern Keyboard keyboardEventKeyMotion keysymKeycode ← Event
 data SdlState α = SdlState
   { window ∷ Window
   , renderer ∷ Renderer
+  , mouse ∷ Point V2 Int
+  , events ∷ [Event]
+  , time ∷ Float
   , recursion ∷ IO α
   }
 
@@ -23,11 +26,14 @@ runSdl ∷ ReaderT (SdlState α) IO α → IO α
 runSdl action = do
   initializeAll
   window ← createWindow "…" defaultWindow
-  renderer ← createRenderer window (-1) defaultRenderer
+  renderer ← createRenderer window (-1) defaultRenderer {rendererType = AcceleratedVSyncRenderer}
   result ← fix \ recursion → do
     rendererDrawColor renderer $= V4 0 0 0 255
     clear renderer
     present renderer
+    mouse ← (fmap ∘ fmap) fromIntegral getAbsoluteMouseLocation
+    events ← pollEvents
+    time ← time
     runReaderT action SdlState {..}
   destroyWindow window
   return result
@@ -39,7 +45,11 @@ recurse = do
 
 main ∷ IO ( )
 main = runSdl do
-  event ← waitEvent
-  case event of
-    Keyboard Pressed KeycodeQ → return ( )
-    _ → recurse
+  SdlState {..} ← ask
+  liftIO do print events
+  liftIO do print mouse
+  liftIO do print time
+  recurse
+  -- case event of
+  --   Keyboard Pressed KeycodeQ → return ( )
+  --   _ → recurse

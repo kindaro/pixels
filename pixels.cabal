@@ -57,6 +57,8 @@ common commons
     TypeOperators
     UndecidableInstances
     UnicodeSyntax
+    ImportQualifiedPost
+    NoFieldSelectors
 
   ghc-options: -Wpartial-type-signatures -fdefer-typed-holes -Wall -Wno-star-is-type -Wno-unticked-promoted-constructors
 
